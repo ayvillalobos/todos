@@ -22,8 +22,14 @@
       </div>
     
       <div class="col-md-4 ms-auto d-flex">
-        <div class="col-md-5"><button type="button" id="incomplet" class="btn btn-info text-white">Incomplete Tasks</button> </div>
-        <div class="col-md-4"><button type="button"id="task" class="btn btn-info text-white ">Complete Tasks</button></div>
+        
+        <%= linkTo(tasksPath(), {class: "text-decoration-none col-md-4 text-white"}){ %>
+          Incomplete Tasks
+          <% } %>
+        <%= linkTo(newTasksPath(), {class:"text-decoration-none col-md-5 text-white"}){ %>
+          Completed Tasks
+          <% } %>
+
       </div>
     </header>
 		<%= yield %>
