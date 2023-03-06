@@ -1,0 +1,8 @@
+
+<%= formFor(task, {action: taskPath({ task_id: task.ID }), class: "py-5", method: "PUT"}) { %>
+    <div class="mb-2 m-auto py-4 w-50 shadow-sm">
+        <h3 class="d-inline-block px-5">Edit Task</h3>
+    </div>
+	<%= partial("tasks/form.push.html") %>
+    <%= linkTo(taskPath({ task_id: task.ID }), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+<% } %>

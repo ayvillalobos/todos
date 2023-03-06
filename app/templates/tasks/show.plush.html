@@ -1,0 +1,14 @@
+<div class="py-4 mb-2">
+	<h3 class="d-inline-block">Client Meeting</h3>
+	<div class="float-right">
+		<%= linkTo(tasksPath(), {class: "btn btn-info"}) { %>
+		Back to all Tasks
+		<% } %>
+		<%= linkTo(editTaskPath({ task_id: task.ID }), {class: "btn btn-warning", body: "Edit"}) %>
+		<%= linkTo(taskPath({ task_id: task.ID }), {class: "btn btn-danger", "data-method": "DELETE", "data-confirm": "Are you sure?", body: "Destroy"}) %>
+	</div>
+</div>
+
+<span>
+	As a business owner or manager, the decision to opt for offshore soOware development can be difficult. As anyone who has experience knows, there are advantages and disadvantages to outsourcing soOware development. How then, do you balance the risks and rewards and come out on top? Here are five )ps to ensure that you receive an excellent return on investment
+</span>

@@ -1,0 +1,37 @@
+<div class="py-4 mb-2">
+
+	<div class="d-flex justify-content-end w-75 m-auto">
+		<%= linkTo(newTasksPath(), {class: "text-decoration-none py-2 btn-lg bg-info px-4 mt-3 text-white justify-content-end"}) { %>
+		Add Task
+		<% } %>
+	</div>
+</div>
+
+<table class="table px-5 bg-white m-auto py-4 w-75 mt-3 shadow-sm">
+	<thead class="thead-light text-white fs-5" id="colors">
+		<th class="py-4"></th>
+		<th class="w-50 py-4">Task</th>
+		<th class="p-4">Complete By</th>
+		<th class="p-4">Actions</th>
+	</thead>
+	<tbody>
+		<%= for (task) in tasks { %>
+		<tr>
+			<td class="align-middle"><%= task.ID %></td>
+			<td class="align-middle"><%= task.CreatedAt %></td>
+			<td class="align-middle"><%= task.UpdatedAt %></td>
+			<td>
+				<div class="float-right">
+					<%= linkTo(taskPath({ task_id: task.ID }), {class: "btn btn-info", body: "View"}) %>
+					<%= linkTo(editTaskPath({ task_id: task.ID }), {class: "btn btn-warning", body: "Edit"}) %>
+					<%= linkTo(taskPath({ task_id: task.ID }), {class: "btn btn-danger", "data-method": "DELETE", "data-confirm": "Are you sure?", body: "Destroy"}) %>
+				</div>
+			</td>
+		</tr>
+		<% } %>
+	</tbody>
+</table>
+
+<div class="text-center">
+	<%= paginator(pagination) %>
+</div>

@@ -1,0 +1,9 @@
+
+
+<%= formFor(task, {action: tasksPath(), class: "py-5", method: "POST"}) { %>
+	<div class="py-4 mb-2 m-auto py-4 w-50 shadow-sm ">
+		<h3 class="d-inline-block px-5 ">New Task</h3>
+		<%= partial("tasks/form.plush.html") %>
+	</div>
+	
+<% } %>

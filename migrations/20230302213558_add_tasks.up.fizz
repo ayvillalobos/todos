@@ -1,0 +1,6 @@
+create_table("tasks") {
+    t.Column("id", "uuid", {primary: true})
+    t.Column("title", "string", {})
+    t.Column("limit_date", "date", {})
+    t.Column("description", "string", {})
+}
