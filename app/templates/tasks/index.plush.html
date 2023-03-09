@@ -18,13 +18,14 @@
 		<%= for (task) in tasks { %>
 		<tr>
 			<td class="align-middle"><%= task.ID %></td>
-			<td class="align-middle"><%= task.CreatedAt %></td>
-			<td class="align-middle"><%= task.UpdatedAt %></td>
+			<td class="align-middle"><%= task.Title %></td>
+			<td class="align-middle"><%= task.LimitDate.Format("2 Jan 2006") %></td>
+			
 			<td>
 				<div class="float-right">
-					<%= linkTo(taskPath({ task_id: task.ID }), {class: "btn btn-info", body: "View"}) %>
-					<%= linkTo(editTaskPath({ task_id: task.ID }), {class: "btn btn-warning", body: "Edit"}) %>
-					<%= linkTo(taskPath({ task_id: task.ID }), {class: "btn btn-danger", "data-method": "DELETE", "data-confirm": "Are you sure?", body: "Destroy"}) %>
+					<!-- <%= linkTo(taskPath({ task_id: task.ID }), {class: "btn btn-info", body: "View"}) %> -->
+					<%= linkTo(editTaskPath({ task_id: task.ID }), {class:"bi bi-pencil text-secondary mx-2"}) %>
+					<%= linkTo(taskPath({ task_id: task.ID }), { class:"bi bi-trash3 text-danger mx-4", "data-method": "DELETE", "data-confirm": "Are you sure?"}) %>
 				</div>
 			</td>
 		</tr>

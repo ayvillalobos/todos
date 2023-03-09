@@ -21,6 +21,5 @@ func setRoutes(root *buffalo.App) {
 	root.GET("/", home.Index)
 
 	root.Resource("/tasks", actions.TasksResource{})
-
 	root.ServeFiles("/", http.FS(public.FS()))
 }

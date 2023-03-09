@@ -2,7 +2,11 @@
 <%= formFor(task, {action: taskPath({ task_id: task.ID }), class: "py-5", method: "PUT"}) { %>
     <div class="mb-2 m-auto py-4 w-50 shadow-sm">
         <h3 class="d-inline-block px-5">Edit Task</h3>
+        <%= partial("tasks/form.plush.html") %>
+        <div class="d-flex justify-content-end buttons mx-5">
+            <%= linkTo(tasksPath(), {class: "btn btn-light px-4 py-2 me-sm-3 justify-content-end btn-cancel" , body: "Cancel" })%>
+            <button type="submit"  class="btn btn-info px-4 py-2 mb-3 mb-sm-0 justify-content-end btn-add">Edit Task</button>
+        </div>
     </div>
-	<%= partial("tasks/form.push.html") %>
-    <%= linkTo(taskPath({ task_id: task.ID }), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+
 <% } %>

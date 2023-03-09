@@ -3,6 +3,7 @@ package actions
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/buffalo/render"
@@ -68,7 +69,10 @@ func (v TasksResource) Show(c buffalo.Context) error {
 // New renders the form for creating a new Task.
 // This function is mapped to the path GET /tasks/new
 func (v TasksResource) New(c buffalo.Context) error {
-	c.Set("task", &models.Task{})
+	task := &models.Task{}
+
+	task.LimitDate = time.Now()
+	c.Set("task", task)
 
 	return c.Render(http.StatusOK, r.HTML("/tasks/new.plush.html"))
 }
@@ -95,6 +99,7 @@ func (v TasksResource) Create(c buffalo.Context) error {
 	if err != nil {
 		return err
 	}
+	fmt.Println("task", task)
 
 	if verrs.HasAny() {
 		// Make the errors available inside the html template
@@ -111,7 +116,8 @@ func (v TasksResource) Create(c buffalo.Context) error {
 	c.Flash().Add("success", "task.created.success")
 
 	// and redirect to the show page
-	return c.Redirect(http.StatusSeeOther, "taskPath()", render.Data{"task_id": task.ID})
+	return c.Redirect(http.StatusSeeOther, "/tasks")
+
 }
 
 // Edit renders a edit form for a Task. This function is
