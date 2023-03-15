@@ -19,7 +19,8 @@
 		<%= for (task) in tasks { %>     
 			<tr>
 				<td class="align-middle text-center">
-					<%= linkTo(unnamedPath({task_id: task.ID}), {data-method: "PATCH", body:"Complete"}) %></td>
+				<%= linkTo(completePath({task_id: task.ID}),{data-method: "PATCH", body:"complete"}) %>
+				</td>
 				<td class="align-middle">
 					<%= task.Title %>
 				</td>

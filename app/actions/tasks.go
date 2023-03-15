@@ -214,33 +214,6 @@ func (v TasksResource) Destroy(c buffalo.Context) error {
 	return c.Redirect(http.StatusSeeOther, "/tasks")
 }
 
-func Destroy(c buffalo.Context) error {
-	// Get the DB connection from the context
-	tx, ok := c.Value("tx").(*pop.Connection)
-	if !ok {
-		return fmt.Errorf("no transaction found")
-	}
-
-	// Allocate an empty Task
-	task := &models.Task{}
-	fmt.Print("si carajo")
-
-	// To find the Task the parameter task_id is used.
-	if err := tx.Find(task, c.Param("task_id")); err != nil {
-		return c.Error(http.StatusNotFound, err)
-	}
-
-	if err := tx.Destroy(task); err != nil {
-		return err
-	}
-
-	// If there are no errors set a flash message
-	c.Flash().Add("success", "task.destroyed.success")
-
-	// Redirect to the index page
-	return c.Redirect(http.StatusSeeOther, "/tasks")
-}
-
 func Complete(c buffalo.Context) error {
 
 	tx, ok := c.Value("tx").(*pop.Connection)
@@ -250,6 +223,7 @@ func Complete(c buffalo.Context) error {
 	task := &models.Task{}
 
 	c.Set("task", task)
+	fmt.Println("holaaaa")
 
 	// To find the Task the parameter task_id is used.
 	if err := tx.Find(task, c.Param("task_id")); err != nil {
