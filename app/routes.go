@@ -19,7 +19,8 @@ func setRoutes(root *buffalo.App) {
 	root.Use(middleware.CSRF)
 
 	root.GET("/", home.Index)
-
 	root.Resource("/tasks", actions.TasksResource{})
+	root.PUT("/{task_id}/complete", actions.Complete)
+
 	root.ServeFiles("/", http.FS(public.FS()))
 }

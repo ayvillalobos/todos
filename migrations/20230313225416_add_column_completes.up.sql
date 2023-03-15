@@ -1,0 +1,1 @@
+ALTER TABLE tasks ADD COLUMN complete bool default false;

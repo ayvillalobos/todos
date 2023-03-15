@@ -15,6 +15,7 @@ type Task struct {
 	Title       string    `json:"title" db:"title"`
 	LimitDate   time.Time `json:"limit_date" db:"limit_date"`
 	Description string    `json:"description" db:"description"`
+	Complete    bool      `json:"complete" db:"complete"`
 	CreatedAt   time.Time `json:"created_at" db:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at" db:"updated_at"`
 }

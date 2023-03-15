@@ -16,11 +16,13 @@
 	</thead>
 	<tbody>
 		<%= for (task) in tasks { %>
-		<tr>
-			<td class="align-middle"><%= task.ID %></td>
-			<td class="align-middle"><%= task.Title %></td>
-			<td class="align-middle"><%= task.LimitDate.Format("2 Jan 2006") %></td>
-			
+		<tr> 
+			<td class="align-middle text-center"> <%= form({action:completePath ({task_id:task.ID}), method: "PUT"}){ %>
+				<%= f.CheckboxTag({id:"checkbox"}) %>
+				<button type="submit"></button>
+				 <% } %></td>
+				 <td class="align-middle"><%= task.Title %></td>
+				<td class="align-middle p-3"><%= task.LimitDate.Format("2 Jan 2006") %></td>
 			<td>
 				<div class="float-right">
 					<!-- <%= linkTo(taskPath({ task_id: task.ID }), {class: "btn btn-info", body: "View"}) %> -->
