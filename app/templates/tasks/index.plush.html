@@ -19,7 +19,11 @@
 		<%= for (task) in tasks { %>     
 			<tr>
 				<td class="align-middle text-center">
-				<%= linkTo(completePath({task_id: task.ID}),{data-method: "PATCH", body:"complete"}) %>
+					<%= form_for(task,{action:taskPath({task_id:task.ID}), data-method:"PATCH"}) { %>
+						<%= f.CheckboxTag("Complete", { unchecked: false}) %>
+					
+					  <% } %>
+				<!--<%= linkTo(taskPath({task_id:task.ID}),{data-method:"PATCH", body:"complete"}) %>  -->
 				</td>
 				<td class="align-middle">
 					<%= task.Title %>

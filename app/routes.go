@@ -20,7 +20,7 @@ func setRoutes(root *buffalo.App) {
 
 	root.GET("/", home.Index)
 	root.Resource("/tasks", actions.TasksResource{})
-	root.PATCH("/{task_id}/", actions.Complete).Name("completePath")
+	root.PATCH("/tasks/{task_id}/", actions.Complete)
 
 	root.ServeFiles("/", http.FS(public.FS()))
 }
