@@ -1,5 +1,4 @@
 <div class="py-4 mb-2">
-
 	<div class="d-flex justify-content-end w-75 m-auto">
 		<%= linkTo(newTasksPath(),
 			{class: "text-decoration-none py-2 btn-lg bg-info px-4 mt-3 text-white justify-content-end" }) { %>
@@ -20,8 +19,7 @@
 			<tr>
 				<td class="align-middle text-center">
 					<%= form_for(task,{action:taskPath({task_id:task.ID}), data-method:"PATCH"}) { %>
-						<%= f.CheckboxTag("Complete", { unchecked: false}) %>
-					
+						<%= f.CheckboxTag("Complete", {class:"mx-2", unchecked: false, label:""}) %>
 					  <% } %>
 				<!--<%= linkTo(taskPath({task_id:task.ID}),{data-method:"PATCH", body:"complete"}) %>  -->
 				</td>
@@ -29,7 +27,7 @@
 					<%= task.Title %>
 				</td>
 				<td class="align-middle p-3">
-					<%= task.LimitDate.Format("2 Jan 2006") %>
+					<%= task.LimitDate.Time.Format("2 Jan 2006") %>
 				</td>
 				<td>
 					<div class="float-right">

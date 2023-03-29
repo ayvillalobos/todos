@@ -3,10 +3,8 @@ package actions
 import (
 	"fmt"
 	"net/http"
-	"time"
 
 	"github.com/gobuffalo/buffalo"
-	"github.com/gobuffalo/buffalo/render"
 	"github.com/gobuffalo/pop/v6"
 
 	"todos/app/models"
@@ -71,7 +69,6 @@ func (v TasksResource) Show(c buffalo.Context) error {
 func (v TasksResource) New(c buffalo.Context) error {
 	task := &models.Task{}
 
-	task.LimitDate = time.Now()
 	c.Set("task", task)
 
 	return c.Render(http.StatusOK, r.HTML("/tasks/new.plush.html"))
@@ -99,9 +96,11 @@ func (v TasksResource) Create(c buffalo.Context) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println("task", task)
 
 	if verrs.HasAny() {
+
+		fmt.Println(task)
+
 		// Make the errors available inside the html template
 		c.Set("errors", verrs)
 
@@ -182,7 +181,7 @@ func (v TasksResource) Update(c buffalo.Context) error {
 	c.Flash().Add("success", "task.updated.success")
 
 	// and redirect to the show page
-	return c.Redirect(http.StatusSeeOther, "taskPath()", render.Data{"task_id": task.ID})
+	return c.Redirect(http.StatusSeeOther, "/tasks")
 }
 
 // Destroy deletes a Task from the DB. This function is mapped

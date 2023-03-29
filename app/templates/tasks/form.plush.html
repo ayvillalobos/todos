@@ -4,8 +4,12 @@
       <%= f.InputTag("Title", {class:"form-control"}) %>
     </div>
     <div class="col">
-      <%= f.InputTag("LimitDate" ,{class:"form-control", type:"Date", Format:"02-01-2006"}) %>
-    </div>
+        <%= if (task.LimitDate.Valid) { %>
+        <%= f.InputTag("LimitDate" ,{class:"date-picker",placeholder:"Select Date..", value:task.LimitDate.Time}) %>
+       <% } else { %>
+        <%= f.InputTag("LimitDate" ,{class:"date-picker", placeholder:"Select Date.."}) %>
+        <% } %>
+        </div>
   </div>
   <div class="mb-3">
     <%= f.TextArea("Description", {rows: 10}) %>
