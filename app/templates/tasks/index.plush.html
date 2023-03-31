@@ -18,12 +18,11 @@
 		<%= for (task) in tasks { %>     
 			<tr>
 				<td class="align-middle text-center">
-				<!--	<%= form_for(task,{action: taskPath({task_id:task.ID}), method:"PATCH"}) { %>
-					<%= task.ID %>
-
-						<%= f.CheckboxTag("Complete", {class:"mx-2 check_box",  unchecked: false, label:""}) %>
-					  <% } %>-->
-				<%= linkTo(taskPath({task_id:task.ID}),{data-method:"PATCH", body:"complete"}) %>  
+					
+					<%= form_for(task,{action: completeTaskPath({id:task.ID}), method:"PATCH"}) { %>
+						
+						<%= f.CheckboxTag("Complete", {class:"mx-2 check_box", label:""}) %>
+					<% } %>
  				</td>
 				<td class="align-middle">
 					<%= task.Title %>
@@ -33,7 +32,6 @@
 				</td>
 				<td>
 					<div class="float-right">
-						<!-- <%= linkTo(taskPath({ task_id: task.ID }), {class: "btn btn-info", body: "View"}) %> -->
 						<%= linkTo(editTaskPath({ task_id: task.ID }), {class:"bi bi-pencil text-secondary mx-2"}) %>
 							<%= linkTo(taskPath({ task_id: task.ID }), { class:"bi bi-trash3 text-danger
 								mx-4", "data-method" : "DELETE" , "data-confirm" : "Are you sure?" }) %>

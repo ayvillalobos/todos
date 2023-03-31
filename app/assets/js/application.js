@@ -17,15 +17,13 @@ pickers.forEach(element => {
 })
 
 
-
-$(".check_box").change(function(){
-  if($(this).prop('checked') == true){
-    $("form").submit();
-    console.log("aqui es")
-  }
-});
-
-
+const checkBoxs = document.querySelectorAll(".check_box")
+checkBoxs.forEach(element => {
+    element.addEventListener('change', ()=>{
+      element.closest('form').submit()
+    })
+})
+ 
 
 
 

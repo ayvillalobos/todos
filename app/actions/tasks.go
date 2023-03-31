@@ -221,20 +221,17 @@ func Complete(c buffalo.Context) error {
 	}
 	task := &models.Task{}
 
-	c.Set("task", task)
-	fmt.Println("esta funcion esta corriendo correctamente.")
-
 	// To find the Task the parameter task_id is used.
 
-	if err := tx.Find(task, c.Param("task_id")); err != nil {
+	if err := tx.Find(task, c.Param("id")); err != nil {
 		return fmt.Errorf("no existe ese id buscado")
 	}
+
 	task.Complete = true
-	err := tx.UpdateColumns(task, "complete")
+	err := tx.Update(task)
 	if err != nil {
 		return err
 	}
-	fmt.Println("si es correcto lo que estoy haciendo")
 
 	return c.Redirect(http.StatusSeeOther, "/tasks")
 }
