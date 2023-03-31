@@ -18,6 +18,16 @@ pickers.forEach(element => {
 
 
 
+$(".check_box").change(function(){
+  if($(this).prop('checked') == true){
+    $("form").submit();
+    console.log("aqui es")
+  }
+});
+
+
+
+
 
 
 
