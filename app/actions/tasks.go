@@ -30,7 +30,7 @@ func (v TasksResource) List(c buffalo.Context) error {
 	// Paginate results. Params "page" and "per_page" control pagination.
 	// Default values are "page=1" and "per_page=20".
 
-	q := tx.Paginate(tx.Q().Paginator.Page, 5)
+	q := tx.PaginateFromParams(c.Params())
 
 	if c.Param("section") == "complete" {
 		q.Where("complete")
