@@ -19,8 +19,19 @@ func setRoutes(root *buffalo.App) {
 	root.Use(middleware.CSRF)
 
 	root.GET("/", home.Index)
-	root.Resource("/tasks", actions.TasksResource{})
-	root.PATCH("/tasks/{id}/", actions.Complete).Name("completeTaskPath")
+
+	taskResource := actions.TasksResource{}
+
+	//root.Resource("/tasks", taskResource)
+	//root.GET("/tasks/", taskResource.List)
+	root.GET("/tasks/{section}", taskResource.List)
+	root.DELETE("/task/{id}", taskResource.Destroy)
+	root.PUT("/tasks/{id}", taskResource.Update)
+	root.GET("/task/new", taskResource.New)
+	root.GET("/task/edit", taskResource.Edit)
+	root.POST("/tasks", taskResource.Create)
+	root.PATCH("/task/{id}/{section}", actions.Complete).Name("completeTaskPath")
 
 	root.ServeFiles("/", http.FS(public.FS()))
+
 }

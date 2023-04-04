@@ -1,11 +1,10 @@
 <div class="py-4 mb-2">
 	<div class="d-flex justify-content-end w-75 m-auto">
-		<%= linkTo(newTasksPath(),
+		<%= linkTo(newTaskPath(),
 			{class: "text-decoration-none py-2 btn-lg bg-info px-4 mt-3 text-white justify-content-end" }) { %>
 			Add Task
 			<% } %>
 	</div>
-</div>
 
 <table class="table px-5 bg-white m-auto py-4 w-75 mt-3 shadow-sm">
 	<thead class="thead-light text-white fs-5" id="colors">
@@ -19,10 +18,16 @@
 			<tr>
 				<td class="align-middle text-center">
 					
-					<%= form_for(task,{action: completeTaskPath({id:task.ID}), method:"PATCH"}) { %>
-						
-						<%= f.CheckboxTag("Complete", {class:"mx-2 check_box", label:""}) %>
-					<% } %>
+					<% let label = "Incomplete"
+					if (task.Complete) { 
+						label = "Complete"
+					} %>
+
+					<% let param = "incomplete"
+					if (!task.Complete) { 
+						param = "complete"
+					} %>
+					<%= linkTo(completeTaskPath({ id: task.ID, section : param }), { data-method:"PATCH", body: label}) %>
  				</td>
 				<td class="align-middle">
 					<%= task.Title %>
@@ -32,8 +37,8 @@
 				</td>
 				<td>
 					<div class="float-right">
-						<%= linkTo(editTaskPath({ task_id: task.ID }), {class:"bi bi-pencil text-secondary mx-2"}) %>
-							<%= linkTo(taskPath({ task_id: task.ID }), { class:"bi bi-trash3 text-danger
+						<%= linkTo(editTaskPath({ id: task.ID }), {class:"bi bi-pencil text-secondary mx-2"}) %>
+							<%= linkTo(taskPath({ id: task.ID }), { class:"bi bi-trash3 text-danger
 								mx-4", "data-method" : "DELETE" , "data-confirm" : "Are you sure?" }) %>
 					</div>
 				</td>

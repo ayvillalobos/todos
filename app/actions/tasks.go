@@ -18,6 +18,7 @@ type TasksResource struct {
 // List gets all Tasks. This function is mapped to the path
 // GET /tasks
 func (v TasksResource) List(c buffalo.Context) error {
+
 	// Get the DB connection from the context
 	tx, ok := c.Value("tx").(*pop.Connection)
 	if !ok {
@@ -28,7 +29,16 @@ func (v TasksResource) List(c buffalo.Context) error {
 
 	// Paginate results. Params "page" and "per_page" control pagination.
 	// Default values are "page=1" and "per_page=20".
-	q := tx.PaginateFromParams(c.Params())
+
+	q := tx.Paginate(tx.Q().Paginator.Page, 5)
+
+	if c.Param("section") == "complete" {
+		q.Where("complete")
+	} else if c.Param("section") == "incomplete" {
+		q.Where("NOT complete")
+	} else {
+		return c.Error(http.StatusNotFound, fmt.Errorf("could not find %s", c.Request().URL))
+	}
 
 	// Retrieve all Tasks from the DB
 	if err := q.All(&tasks); err != nil {
@@ -115,7 +125,7 @@ func (v TasksResource) Create(c buffalo.Context) error {
 	c.Flash().Add("success", "task.created.success")
 
 	// and redirect to the show page
-	return c.Redirect(http.StatusSeeOther, "/tasks")
+	return c.Redirect(http.StatusSeeOther, "/tasks/incomplete")
 
 }
 
@@ -131,7 +141,7 @@ func (v TasksResource) Edit(c buffalo.Context) error {
 	// Allocate an empty Task
 	task := &models.Task{}
 
-	if err := tx.Find(task, c.Param("task_id")); err != nil {
+	if err := tx.Find(task, c.Param("id")); err != nil {
 		return c.Error(http.StatusNotFound, err)
 	}
 
@@ -152,7 +162,7 @@ func (v TasksResource) Update(c buffalo.Context) error {
 	// Allocate an empty Task
 	task := &models.Task{}
 
-	if err := tx.Find(task, c.Param("task_id")); err != nil {
+	if err := tx.Find(task, c.Param("id")); err != nil {
 		return c.Error(http.StatusNotFound, err)
 	}
 
@@ -198,7 +208,7 @@ func (v TasksResource) Destroy(c buffalo.Context) error {
 	fmt.Print("si carajo")
 
 	// To find the Task the parameter task_id is used.
-	if err := tx.Find(task, c.Param("task_id")); err != nil {
+	if err := tx.Find(task, c.Param("id")); err != nil {
 		return c.Error(http.StatusNotFound, err)
 	}
 
@@ -227,11 +237,15 @@ func Complete(c buffalo.Context) error {
 		return fmt.Errorf("no existe ese id buscado")
 	}
 
-	task.Complete = true
+	task.Complete = !task.Complete
 	err := tx.Update(task)
 	if err != nil {
 		return err
 	}
 
-	return c.Redirect(http.StatusSeeOther, "/tasks")
+	if c.Param("section") != "complete" {
+		return c.Redirect(http.StatusSeeOther, "/tasks/incomplete")
+	}
+
+	return c.Redirect(http.StatusSeeOther, "/tasks/complete")
 }

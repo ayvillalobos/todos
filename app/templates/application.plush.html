@@ -27,10 +27,10 @@
     
       <div class="col-md-4 ms-auto d-flex">
         
-        <%= linkTo(tasksPath(), {class: "text-decoration-none col-md-4 text-white"}){ %>
+        <%= linkTo(taskSectionPath({section: "incomplete"}), {class: "text-decoration-none col-md-4 text-white"}){ %>
           Incomplete Tasks
           <% } %>
-        <%= linkTo(newTasksPath(), {class:"text-decoration-none col-md-5 text-white"}){ %>
+        <%= linkTo(taskSectionPath({section: "complete"}), {class:"text-decoration-none col-md-5 text-white"}){ %>
           Completed Tasks
           <% } %>
 

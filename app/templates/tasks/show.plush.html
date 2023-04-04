@@ -4,8 +4,8 @@
 		<%= linkTo(tasksPath(), {class: "btn btn-info"}) { %>
 		Back to all Tasks
 		<% } %>
-		<%= linkTo(editTaskPath({ task_id: task.ID }), {class: "btn btn-warning", body: "Edit"}) %>
-		<%= linkTo(taskPath({ task_id: task.ID }), {class: "btn btn-danger", "data-method": "DELETE", "data-confirm": "Are you sure?", body: "Destroy"}) %>
+		<%= linkTo(editTaskPath({ id: task.ID }), {class: "btn btn-warning", body: "Edit"}) %>
+		<%= linkTo(taskPath({ id: task.ID }), {class: "btn btn-danger", "data-method": "DELETE", "data-confirm": "Are you sure?", body: "Destroy"}) %>
 	</div>
 </div>
 
