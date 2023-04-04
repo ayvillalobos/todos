@@ -14,5 +14,5 @@ var (
 )
 
 func Index(c buffalo.Context) error {
-	return c.Redirect(http.StatusSeeOther, "/tasks")
+	return c.Redirect(http.StatusSeeOther, "/tasks/incomplete")
 }
