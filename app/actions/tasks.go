@@ -190,8 +190,12 @@ func (v TasksResource) Update(c buffalo.Context) error {
 	// If there are no errors set a success message
 	c.Flash().Add("success", "task.updated.success")
 
+	if task.Complete {
+		return c.Redirect(http.StatusSeeOther, "/tasks/complete")
+	}
+
 	// and redirect to the show page
-	return c.Redirect(http.StatusSeeOther, "/tasks")
+	return c.Redirect(http.StatusSeeOther, "/tasks/incomplete")
 }
 
 // Destroy deletes a Task from the DB. This function is mapped
@@ -205,7 +209,6 @@ func (v TasksResource) Destroy(c buffalo.Context) error {
 
 	// Allocate an empty Task
 	task := &models.Task{}
-	fmt.Print("si carajo")
 
 	// To find the Task the parameter task_id is used.
 	if err := tx.Find(task, c.Param("id")); err != nil {
@@ -219,8 +222,11 @@ func (v TasksResource) Destroy(c buffalo.Context) error {
 	// If there are no errors set a flash message
 	c.Flash().Add("success", "task.destroyed.success")
 
+	if task.Complete {
+		return c.Redirect(http.StatusSeeOther, "/tasks/complete")
+	}
 	// Redirect to the index page
-	return c.Redirect(http.StatusSeeOther, "/tasks")
+	return c.Redirect(http.StatusSeeOther, "/tasks/incomplete")
 }
 
 func Complete(c buffalo.Context) error {
@@ -243,9 +249,10 @@ func Complete(c buffalo.Context) error {
 		return err
 	}
 
-	if c.Param("section") != "complete" {
-		return c.Redirect(http.StatusSeeOther, "/tasks/incomplete")
+	if task.Complete {
+		return c.Redirect(http.StatusSeeOther, "/tasks/complete")
 	}
 
-	return c.Redirect(http.StatusSeeOther, "/tasks/complete")
+	return c.Redirect(http.StatusSeeOther, "/tasks/incomplete")
+
 }
