@@ -256,3 +256,14 @@ func Complete(c buffalo.Context) error {
 	return c.Redirect(http.StatusSeeOther, "/tasks/incomplete")
 
 }
+
+func CountTasks(tx *pop.Connection) (int, error) {
+	task := &models.Task{}
+
+	count, err := tx.Where("NOT complete").Count(task)
+	if err != nil {
+		return count, err
+	}
+
+	return count, nil
+}
