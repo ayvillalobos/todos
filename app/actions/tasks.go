@@ -132,8 +132,6 @@ func (v TasksResource) Create(c buffalo.Context) error {
 
 	if verrs.HasAny() {
 
-		fmt.Println(task)
-
 		// Make the errors available inside the html template
 		c.Set("errors", verrs)
 
@@ -146,7 +144,7 @@ func (v TasksResource) Create(c buffalo.Context) error {
 	}
 
 	// If there are no errors set a success message
-	c.Flash().Add("success", "task.created.success")
+	c.Flash().Add("success", "task created success")
 
 	// and redirect to the show page
 	return c.Redirect(http.StatusSeeOther, "/tasks/incomplete")
@@ -218,7 +216,7 @@ func (v TasksResource) Update(c buffalo.Context) error {
 	}
 
 	// If there are no errors set a success message
-	c.Flash().Add("success", "task.updated.success")
+	c.Flash().Add("success", "task updated success")
 
 	if task.Complete {
 		return c.Redirect(http.StatusSeeOther, "/tasks/complete")
@@ -250,7 +248,7 @@ func (v TasksResource) Destroy(c buffalo.Context) error {
 	}
 
 	// If there are no errors set a flash message
-	c.Flash().Add("success", "task.destroyed.success")
+	c.Flash().Add("success", "task destroyed success")
 
 	if task.Complete {
 		return c.Redirect(http.StatusSeeOther, "/tasks/complete")
@@ -270,7 +268,7 @@ func Complete(c buffalo.Context) error {
 	// To find the Task the parameter task_id is used.
 
 	if err := tx.Find(task, c.Param("id")); err != nil {
-		return fmt.Errorf("no existe ese id buscado")
+		return fmt.Errorf("err")
 	}
 
 	task.Complete = !task.Complete
