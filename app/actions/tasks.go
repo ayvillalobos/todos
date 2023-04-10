@@ -49,6 +49,13 @@ func (v TasksResource) List(c buffalo.Context) error {
 	c.Set("pagination", q.Paginator)
 	c.Set("tasks", tasks)
 
+	count, err := CountTasks(tx)
+	if err != nil {
+		fmt.Println(err)
+
+	}
+	c.Set("count", count)
+
 	return c.Render(http.StatusOK, r.HTML("/tasks/index.plush.html"))
 }
 
@@ -77,8 +84,18 @@ func (v TasksResource) Show(c buffalo.Context) error {
 // New renders the form for creating a new Task.
 // This function is mapped to the path GET /tasks/new
 func (v TasksResource) New(c buffalo.Context) error {
+	tx, ok := c.Value("tx").(*pop.Connection)
+	if !ok {
+		return fmt.Errorf("no transaction found")
+	}
 	task := &models.Task{}
 
+	count, err := CountTasks(tx)
+	if err != nil {
+		fmt.Println(err)
+
+	}
+	c.Set("count", count)
 	c.Set("task", task)
 
 	return c.Render(http.StatusOK, r.HTML("/tasks/new.plush.html"))
@@ -100,6 +117,12 @@ func (v TasksResource) Create(c buffalo.Context) error {
 	if !ok {
 		return fmt.Errorf("no transaction found")
 	}
+	count, err := CountTasks(tx)
+	if err != nil {
+		fmt.Println(err)
+
+	}
+	c.Set("count", count)
 
 	// Validate the data from the html form
 	verrs, err := tx.ValidateAndCreate(task)
@@ -116,6 +139,7 @@ func (v TasksResource) Create(c buffalo.Context) error {
 
 		// Render again the new.html template that the user can
 		// correct the input.
+
 		c.Set("task", task)
 
 		return c.Render(http.StatusUnprocessableEntity, r.HTML("/tasks/new.plush.html"))
@@ -145,6 +169,12 @@ func (v TasksResource) Edit(c buffalo.Context) error {
 		return c.Error(http.StatusNotFound, err)
 	}
 
+	count, err := CountTasks(tx.Q().Connection)
+	if err != nil {
+		fmt.Println(err)
+
+	}
+	c.Set("count", count)
 	c.Set("task", task)
 
 	return c.Render(http.StatusOK, r.HTML("/tasks/edit.plush.html"))

@@ -22,7 +22,9 @@ var Engine = render.New(render.Options{
 // some helpers that are injected by Buffalo but this is
 // the list of custom Helpers.
 var Helpers = map[string]interface{}{
+
 	// partialFeeder is the helper used by the render engine
 	// to find the partials that will be used, this is important
+
 	"partialFeeder": buffalotools.NewPartialFeeder(templates.FS()),
 }

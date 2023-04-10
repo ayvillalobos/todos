@@ -22,7 +22,7 @@
         <div class="col-md-4 border-end">
           <a class="navbar-brand text-white fs-3" href="#">ToDo List</a>
         </div>
-        <div class="col-md-5 text-white"> 4 Incompleted Tasks </div>
+        <div class="col-md-5 text-white">  <%= count %>  Incompleted Tasks </div>
       </div>
     
       <div class="col-md-4 ms-auto d-flex">
@@ -33,7 +33,6 @@
         <%= linkTo(taskSectionPath({section: "complete"}), {class:"text-decoration-none col-md-5 text-white"}){ %>
           Completed Tasks
           <% } %>
-
       </div>
     </header>
 		<%= yield %>
